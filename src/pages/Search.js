@@ -1,11 +1,9 @@
 import { Component } from 'react';
 
-class Search extends Component {
+export default class Search extends Component {
   render() {
     return (
       <div data-testid="page-search">Search: </div>
     );
   }
 }
-
-export default Search;
