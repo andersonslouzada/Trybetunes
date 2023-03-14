@@ -15,6 +15,7 @@ export default class Login extends Component {
     const userMinLength = 3;
     this.setState({ [name]: value });
     if (value.length >= userMinLength) this.setState({ disabledButton: false });
+    else (this.setState({ disabledButton: true }));
   };
 
   handleUserAPI = async () => {
