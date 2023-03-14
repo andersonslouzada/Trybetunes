@@ -5,7 +5,7 @@ import Loading from './Loading';
 
 export default class Login extends Component {
   state = {
-    isLoading: true,
+    isLoading: false,
     disabledButton: true,
     user: '',
     changePage: false,
@@ -19,16 +19,16 @@ export default class Login extends Component {
 
   handleUserAPI = async () => {
     const { user } = this.state;
-    this.setState({ isLoading: false });
+    this.setState({ isLoading: true });
     await createUser({ name: user });
-    this.setState({ isLoading: true, changePage: true });
+    this.setState({ isLoading: false, changePage: true });
   };
 
   render() {
     const { disabledButton, user, changePage, isLoading } = this.state;
     return (
       <div data-testid="page-login">
-        { isLoading
+        { !isLoading
           ? (
             <form>
               <label htmlFor="user">
