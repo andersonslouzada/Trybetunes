@@ -2,7 +2,7 @@ import { Component } from 'react';
 import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import Loading from './Loading';
-import Card from '../components/Card';
+import AlbumCard from '../components/AlbumCard';
 
 export default class Search extends Component {
   state = {
@@ -64,7 +64,7 @@ export default class Search extends Component {
           && <p>Nenhum álbum foi encontrado</p> }
           { albumList.length > 0 && <p>{`Resultado de álbuns de: ${artist}`}</p> }
           { albumList.map((element) => (
-            <Card
+            <AlbumCard
               key={ element.collectionId }
               albumImg={ element.artworkUrl100 }
               collectionId={ element.collectionId }
