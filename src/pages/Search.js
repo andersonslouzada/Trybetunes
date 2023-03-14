@@ -70,9 +70,7 @@ export default class Search extends Component {
               collectionId={ element.collectionId }
               artistName={ element.artistName }
               albumName={ element.collectionName }
-
             />
-
           ))}
 
         </div>
