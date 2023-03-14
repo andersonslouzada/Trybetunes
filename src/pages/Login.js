@@ -11,14 +11,13 @@ export default class Login extends Component {
     changePage: false,
   };
 
-  handleUserChange = (event) => {
+  handleChange = ({ name, value }) => {
     const userMinLength = 3;
-    const { target } = event;
-    this.setState({ user: target.value });
-    if (target.value.length >= userMinLength) this.setState({ disabledButton: false });
+    this.setState({ [name]: value });
+    if (value.length >= userMinLength) this.setState({ disabledButton: false });
   };
 
-  handleAPI = async () => {
+  handleUserAPI = async () => {
     const { user } = this.state;
     this.setState({ isLoading: false });
     await createUser({ name: user });
@@ -32,20 +31,19 @@ export default class Login extends Component {
         { isLoading
           ? (
             <form>
-              <label htmlFor="login">
+              <label htmlFor="user">
                 Digite seu nome:
                 <input
-                  id="login"
-                  name="login"
+                  name="user"
                   type="text"
                   value={ user }
-                  onChange={ this.handleUserChange }
+                  onChange={ ({ target }) => this.handleChange(target) }
                   data-testid="login-name-input"
                 />
               </label>
               <button
                 name="button"
-                onClick={ this.handleAPI }
+                onClick={ this.handleUserAPI }
                 data-testid="login-submit-button"
                 disabled={ disabledButton }
               >
