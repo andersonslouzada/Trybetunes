@@ -26,8 +26,6 @@ export default class Album extends Component {
   render() {
     const { musicList, isLoading,
       infoAlbum: { artistName, collectionName } } = this.state;
-    // console.log(infoAlbum);
-    // console.log(musicList);
     return (
       <div data-testid="page-album">
         <Header />

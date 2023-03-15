@@ -1,27 +1,42 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import { addSong } from '../services/favoriteSongsAPI';
+import Loading from '../pages/Loading';
 
 export default class MusicCard extends Component {
-  // state = { isLoading: false, favorite: false };
+  state = { isLoading: true, checked: false };
 
   handleChange = ({ target }) => {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({ [name]: value }, this.addFavoriteSong);
+    this.setState(
+      { [name]: value },
+      () => this.favoriteSong(),
+    );
   };
 
-  // addFavoriteSong = async () => {
+  favoriteSong = async () => {
+    const { music } = this.props;
+    const { checked } = this.state;
+    if (checked) {
+      this.setState({ isLoading: false });
+      await addSong(music);
+      this.setState({ isLoading: true });
+    }
+  };
+
+  // removeFavoriteSong = async () => {
   //   const { music } = this.props;
-  //   const { favorite } = this.state;
-  //   console.log(music);
-  //   this.setState({ isLoading: false });
-  //   await addSong(music);
-  //   this.setState({ isLoading: true });
-  //   console.log(addSong());
+  //   const { checked } = this.state;
+  //   if (checked === true) {
+  //     this.setState({ isLoading: false });
+  //     await removeSong(music);
+  //     this.setState({ isLoading: true });
+  //   }
   // };
 
   render() {
-  //   const { favorite } = this.state;
+    const { checked, isLoading } = this.state;
     const { trackName, previewUrl, trackId } = this.props;
     return (
       <div>
@@ -35,13 +50,14 @@ export default class MusicCard extends Component {
         <label>
           <input
             type="checkbox"
-            name="favorite"
-            // onChange={ this.handleChange }
-            // checked={ favorite }
+            name="checked"
+            onChange={ this.handleChange }
+            checked={ checked }
             data-testid={ `checkbox-music-${trackId}` }
           />
           Favorita
         </label>
+        {!isLoading && <Loading />}
       </div>
     );
   }
@@ -51,5 +67,5 @@ MusicCard.propTypes = {
   trackName: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
   trackId: PropTypes.number.isRequired,
-  // music:
+  music: PropTypes.shape().isRequired,
 };
