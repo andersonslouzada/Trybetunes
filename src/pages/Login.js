@@ -33,7 +33,7 @@ export default class Login extends Component {
           ? (
             <form>
               <label htmlFor="user">
-                Digite seu nome:
+                Digite seu usuário:
                 <input
                   name="user"
                   type="text"

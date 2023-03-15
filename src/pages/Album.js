@@ -19,30 +19,29 @@ export default class Album extends Component {
   getMusics = async () => {
     const { match: { params: { id } } } = this.props;
     this.setState({ isLoading: false });
-    const musics = await getMusics(id);
-    const informationAlbum = musics.shift();
-    this.setState({ musicList: musics, isLoading: true, infoAlbum: informationAlbum });
+    const [albumInfo, ...musics] = await getMusics(id);
+    this.setState({ musicList: musics, isLoading: true, infoAlbum: albumInfo });
   };
 
   render() {
-    const { musicList, isLoading, infoAlbum } = this.state;
+    const { musicList, isLoading,
+      infoAlbum: { artistName, collectionName } } = this.state;
     // console.log(infoAlbum);
     // console.log(musicList);
     return (
       <div data-testid="page-album">
         <Header />
-        { !isLoading
-          && <Loading /> }
+        { !isLoading && <Loading /> }
         <div>
-          <h3 data-testid="artist-name">{infoAlbum.artistName}</h3>
-          <h4 data-testid="album-name">{infoAlbum.collectionName}</h4>
-        </div>
-        <div>
+          <p data-testid="artist-name">{artistName}</p>
+          <p data-testid="album-name">{collectionName}</p>
           {(musicList.map((music) => (
             <MusicCard
               key={ music.trackId }
               trackName={ music.trackName }
               previewUrl={ music.previewUrl }
+              trackId={ music.trackId }
+              music={ music }
             />
           )))}
         </div>
