@@ -7,7 +7,7 @@ import MusicCard from '../components/MusicCard';
 
 export default class Album extends Component {
   state = {
-    musicList: [],
+    songList: [],
     isLoading: true,
     infoAlbum: {},
   };
@@ -19,12 +19,12 @@ export default class Album extends Component {
   getMusics = async () => {
     const { match: { params: { id } } } = this.props;
     this.setState({ isLoading: false });
-    const [albumInfo, ...musics] = await getMusics(id);
-    this.setState({ musicList: musics, isLoading: true, infoAlbum: albumInfo });
+    const [albumInfo, ...songs] = await getMusics(id);
+    this.setState({ songList: songs, isLoading: true, infoAlbum: albumInfo });
   };
 
   render() {
-    const { musicList, isLoading,
+    const { songList, isLoading,
       infoAlbum: { artistName, collectionName } } = this.state;
     return (
       <div data-testid="page-album">
@@ -33,13 +33,13 @@ export default class Album extends Component {
         <div>
           <p data-testid="artist-name">{artistName}</p>
           <p data-testid="album-name">{collectionName}</p>
-          {(musicList.map((music) => (
+          {(songList.map((song) => (
             <MusicCard
-              key={ music.trackId }
-              trackName={ music.trackName }
-              previewUrl={ music.previewUrl }
-              trackId={ music.trackId }
-              music={ music }
+              key={ song.trackId }
+              trackName={ song.trackName }
+              previewUrl={ song.previewUrl }
+              trackId={ song.trackId }
+              song={ song }
             />
           )))}
         </div>
